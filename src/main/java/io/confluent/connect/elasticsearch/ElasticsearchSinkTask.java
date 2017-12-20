@@ -18,7 +18,6 @@ package io.confluent.connect.elasticsearch;
 
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
-import org.apache.kafka.common.config.ConfigException;
 import org.apache.kafka.connect.errors.ConnectException;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.kafka.connect.sink.SinkTask;
@@ -98,7 +97,10 @@ public class ElasticsearchSinkTask extends SinkTask {
 
       writer = builder.build();
       writer.start();
-    } catch (ConfigException e) {
+
+      Thread.sleep(5000);
+
+    } catch (Exception e) {
       throw new ConnectException("Couldn't start ElasticsearchSinkTask due to configuration error:", e);
     }
   }
@@ -144,9 +146,9 @@ public class ElasticsearchSinkTask extends SinkTask {
   private Map<String, String> parseMapConfig(List<String> values) {
     Map<String, String> map = new HashMap<>();
     for (String value: values) {
-      String[] parts = value.split(":");
-      String topic = parts[0];
-      String type = parts[1];
+      int i = value.lastIndexOf(':');
+      String topic = value.substring(0, i);
+      String type = value.substring(i + 1);
       map.put(topic, type);
     }
     return map;
