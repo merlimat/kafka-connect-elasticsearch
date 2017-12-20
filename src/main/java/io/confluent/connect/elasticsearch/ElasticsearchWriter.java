@@ -190,7 +190,7 @@ public class ElasticsearchWriter {
 
   public void write(Collection<SinkRecord> records) {
     for (SinkRecord sinkRecord : records) {
-      final String index = sinkRecord.topic();
+      final String index = topicToIndexMap.get(sinkRecord.topic());
       final boolean ignoreKey = ignoreKeyTopics.contains(sinkRecord.topic()) || this.ignoreKey;
       final boolean ignoreSchema = ignoreSchemaTopics.contains(sinkRecord.topic()) || this.ignoreSchema;
 
@@ -258,6 +258,7 @@ public class ElasticsearchWriter {
 
   private Set<String> indicesForTopics(Set<String> assignedTopics) {
     final Set<String> indices = new HashSet<>();
+
     for (String topic : assignedTopics) {
       final String index = topicToIndexMap.get(topic);
       if (index != null) {
