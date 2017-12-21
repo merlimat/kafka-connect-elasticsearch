@@ -97,9 +97,6 @@ public class ElasticsearchSinkTask extends SinkTask {
 
       writer = builder.build();
       writer.start();
-
-      Thread.sleep(5000);
-
     } catch (Exception e) {
       throw new ConnectException("Couldn't start ElasticsearchSinkTask due to configuration error:", e);
     }
@@ -112,7 +109,7 @@ public class ElasticsearchSinkTask extends SinkTask {
     for (TopicPartition tp : partitions) {
       topics.add(tp.topic());
     }
-    writer.createIndicesForTopics(topics);
+    // writer.createIndicesForTopics(topics);
   }
 
   @Override

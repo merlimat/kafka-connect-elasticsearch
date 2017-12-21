@@ -11,6 +11,7 @@
     <properties>
         <confluent.version>3.1.0-SNAPSHOT</confluent.version>
         <kafka.version>0.10.0.0</kafka.version>
+        <pulsar.version>1.21.0-incubating</pulsar.version>
         <junit.version>4.12</junit.version>
         <es.version>2.4.1</es.version>
         <lucene.version>5.5.2</lucene.version>
@@ -35,6 +36,17 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>connect-api</artifactId>
             <version>${kafka.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.kafka</groupId>
+                    <artifactId>kafka-clients</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pulsar</groupId>
+            <artifactId>pulsar-client-kafka</artifactId>
+            <version>${pulsar.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
